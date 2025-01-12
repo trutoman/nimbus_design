@@ -1,0 +1,124 @@
+:root {
+    /* Modo oscuro */
+    --color-background-schema: #10120E;
+    --color-background-content: #181C14;
+    --color-text: #FFFFFF;
+    --color-primary: #3C3D37;
+    --color-secondary: #697565;
+    --color-accent: #ECDFCC;
+    font-size: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Raleway" !important;
+}
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    /* Direction of the items, can be row or column */
+    flex-direction: column;
+}
+
+.container__top_bar {
+    background: var(--color-background-schema);
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    position: relative;
+}
+
+.container__top_bar>*:last-child {
+    margin-left: auto;
+    /* Empuja el último elemento hacia la derecha */
+}
+
+.container__top_bar a {
+    text-decoration: none;
+}
+
+.menu__list {
+    display: flex;
+    list-style: none;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.menu__list--rtl {
+    direction: rtl;
+}
+
+.menu__list-element {
+    display: flex;
+    align-items: stretch;
+}
+
+.menu__item {
+    font-weight: bold;
+    display: block;
+    padding: 14px 16px;
+    width: 100%;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.menu__item:hover {
+    background: var(--color-secondary);
+}
+
+.menu__icon {
+    display: none;
+}
+
+/* Estilos para pantallas pequeñas */
+@media screen and (max-width:400px) {
+    .menu__list {
+        display: none;
+        flex-direction: column;
+    }
+
+    .menu__icon {
+        display: flex;
+        cursor: pointer;
+    }
+
+    .menu__list.responsive {
+        display: flex;
+    }
+}
+
+.content {
+    background: var(--color-secondary);
+    color: var(--color-text);
+    padding: 3rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.content h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--color-accent);
+}
+
+.content p::first-letter {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.5rem;
+}
+
+.container__footer {
+    /* Ya no es absoluto */
+    background-color: var(--color-background-schema);
+    text-align: center;
+    padding: 1rem;
+    color: var(--color-text);
+}
