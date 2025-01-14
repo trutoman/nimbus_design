@@ -10,10 +10,10 @@ function myResponsiveFunction() {
 }
 
 /**
-     * navigateTo(pageName)
-     * 1. Loads the content from pageName.html into #content
-     * 2. Updates the browser's history (pushState) so the URL changes
-     */
+ * navigateTo(pageName)
+ * 1. Loads the content from pageName.html into #content
+ * 2. Updates the browser's history (pushState) so the URL changes
+ */
 function navigateTo(pageName) {
     console.log('Navigating to', pageName);
     loadContent(pageName, true);
@@ -24,9 +24,11 @@ function navigateTo(pageName) {
  * - Fetches the content from "pageName.html".
  * - If shouldPushState is true, calls history.pushState() to update the URL.
  */
-function loadContent(pageName, shouldPushState) {
-    const pageToLoad = pageName || 'home'; // Por defecto, carga 'home'
 
+
+function loadContent(pageToLoad, shouldPushState) {
+
+    console.log("1-Cargando contenido desde:", pageToLoad);
     // --- EVITAR DUPLICAR HISTORIAL ---
     if (shouldPushState) {
         // Si el estado actual del historial ya tiene esta misma página...
@@ -37,12 +39,12 @@ function loadContent(pageName, shouldPushState) {
         }
     }
 
-    console.log('Loading content for', pageToLoad);
+    console.log('Fetching content for', pageToLoad);
     // Fetch the new content
-    fetch(pageToLoad + '.html')
+    fetch(pageToLoad)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Could not load ${pageToLoad}.html`);
+                throw new Error(`Could not load ${pageToLoad}`);
             }
             return response.text();
         })
@@ -52,7 +54,7 @@ function loadContent(pageName, shouldPushState) {
 
             // Update the browser history if requested
             if (shouldPushState) {
-                history.pushState({ page: pageToLoad }, '', pageName);
+                history.pushState({ page: pageToLoad }, '', pageToLoad);
             }
         })
         .catch(error => {
@@ -61,7 +63,6 @@ function loadContent(pageName, shouldPushState) {
                 '<p>Oops! An error occurred loading the page.</p>';
         });
 }
-
 
 async function loadComponents() {
     console.log("Loading components...");
@@ -111,7 +112,7 @@ function setupNavigation() {
             // Si en tu HTML guardas data-page="about", bastará con:
             // navigateTo(clickedItem.dataset.page);
             // o si prefieres el './' delante (depende de tu estructura de rutas):
-            navigateTo(`./${clickedItem.dataset.page}`);
+            navigateTo(`${clickedItem.dataset.page}`);
         }
     });
 
@@ -128,7 +129,7 @@ function setupNavigation() {
             loadContent(event.state.page, false);
         } else {
             // Si no hay estado, cargar la página inicial
-            history.replaceState({ page: 'home' }, '', '/src/home');
+            history.replaceState({ page: 'home' }, '', '/src/pages/home');
             loadContent('home', false);
         }
     });
@@ -138,10 +139,10 @@ function initialAddress() {
 
     let path = window.location.pathname.substring(1); // Obtener la ruta actual sin "/"
 
-    if (!path || path === 'src/index.html') {
+    if (!path || path === 'public/index.html') {
         // Redirigir a la página home y actualizar el historial
-        history.replaceState({ page: 'home' }, '', '/src/home');
-        loadContent('home', false);
+        history.replaceState({ page: 'home' }, '', 'public/index.html');
+        loadContent('/src/pages/home.html', false);
     } else {
         // Cargar contenido dinámico según la URL
         loadContent(path, false);
@@ -150,6 +151,15 @@ function initialAddress() {
 
 async function initApp() {
     console.log("Initialazing application...");
+
+    // 1. Inyectar el navbar
+    const navbarElem = document.getElementById('navbar');
+    if (navbarElem) {
+        const resp = await fetch(navbarElem.dataset.page);
+        navbarElem.innerHTML = await resp.text();
+        await loadComponents();
+    }
+
     await loadComponents();
     initialAddress();
     setupResponsiveMenu();
