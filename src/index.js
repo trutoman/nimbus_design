@@ -80,16 +80,27 @@ function setupResponsiveMenu() {
 }
 
 function setupNavigation() {
-    document.querySelectorAll('.menu__item').forEach(item => {
-        // If menu__item element has a data-page attribute, add a click event listener
-        if (item.dataset.page) {
-            console.log("Adding navigation in " + item + " for " + item.dataset.page);
-            item.addEventListener('click', (event) => {
-                event.preventDefault();
-                // Obtaining path from data-page attribute
-                const page = item.dataset.page;
-                navigateTo(`./${page}`);
-            });
+    // 1. Selecciona el contenedor del menú (ajusta si tu HTML es distinto)
+    const menuContainer = document.getElementById("navbar");
+    if (!menuContainer) {
+        console.error("No se encontró el contenedor de menú #my-responsive-menu en el DOM.");
+        return;
+    }
+
+    // 2. Delegación de eventos: un solo listener en el contenedor
+    menuContainer.addEventListener('click', (event) => {
+        // Verificar si el click ocurrió en un .menu__item
+        const clickedItem = event.target.closest('.menu__item');
+        if (!clickedItem) return; // Si no es .menu__item, salimos
+
+        // Si el elemento tiene data-page, gestionamos la navegación
+        if (clickedItem.dataset.page) {
+            event.preventDefault();
+            // navigateTo recibe el nombre de la página (ej. 'about', 'home')
+            // Si en tu HTML guardas data-page="about", bastará con:
+            // navigateTo(clickedItem.dataset.page);
+            // o si prefieres el './' delante (depende de tu estructura de rutas):
+            navigateTo(`./${clickedItem.dataset.page}`);
         }
     });
 
@@ -98,7 +109,7 @@ function setupNavigation() {
      * When the user clicks back/forward, we get the state from history
      * and load the corresponding page without pushing a new state.
      */
-    window.onpopstate = function (event) {
+    window.addEventListener('popstate', (event) => {
         console.log('Popstate event:', event.state);
         // If state exists (i.e., user navigated away before), load that page
         if (event.state && event.state.page) {
@@ -109,7 +120,7 @@ function setupNavigation() {
             history.replaceState({ page: 'home' }, '', '/src/home');
             loadContent('home', false);
         }
-    };
+    });
 }
 
 function initialAddress() {
