@@ -26,6 +26,17 @@ function navigateTo(pageName) {
  */
 function loadContent(pageName, shouldPushState) {
     const pageToLoad = pageName || 'home'; // Por defecto, carga 'home'
+
+    // --- EVITAR DUPLICAR HISTORIAL ---
+    if (shouldPushState) {
+        // Si el estado actual del historial ya tiene esta misma página...
+        if (history.state && history.state.page === pageToLoad) {
+            // No hacemos pushState (no duplicamos)
+            console.log('Ya estamos en "' + pageToLoad + '", no se añade nueva entrada al historial.');
+            return;
+        }
+    }
+
     console.log('Loading content for', pageToLoad);
     // Fetch the new content
     fetch(pageToLoad + '.html')
