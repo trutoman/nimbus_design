@@ -53,8 +53,13 @@ function loadContent(pageName, shouldPushState) {
         });
 }
 
-document.getElementById('#blog').addEventListener('click', () => {
-    navigateTo('./_blog')
+document.querySelectorAll('.menu__item').forEach(item => {
+    item.addEventListener('click', (event) => {
+        event.preventDefault();
+        // Obtienes la ruta de la página desde el atributo data-page
+        const page = item.dataset.page; // "_home", "_blog", etc.
+        navigateTo(`./${page}`);
+    });
 });
 
 /**
