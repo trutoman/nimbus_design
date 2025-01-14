@@ -1,5 +1,6 @@
 /* Función para alternar el menú responsive */
 function myResponsiveFunction() {
+    console.log("Click en el botón de menú");
     var x = document.getElementById("my-responsive-menu");
     if (x.classList.contains("responsive")) {
         x.classList.remove("responsive");
@@ -7,8 +8,6 @@ function myResponsiveFunction() {
         x.classList.add("responsive");
     }
 }
-// Agregar evento al botón
-document.getElementById("toggle-menu").addEventListener("click", myResponsiveFunction);
 
 /**
      * navigateTo(pageName)
@@ -16,8 +15,7 @@ document.getElementById("toggle-menu").addEventListener("click", myResponsiveFun
      * 2. Updates the browser's history (pushState) so the URL changes
      */
 function navigateTo(pageName) {
-    console.log(pageName);
-
+    console.log('Navigating to', pageName);
     loadContent(pageName, true);
 }
 
@@ -27,69 +25,114 @@ function navigateTo(pageName) {
  * - If shouldPushState is true, calls history.pushState() to update the URL.
  */
 function loadContent(pageName, shouldPushState) {
+    const pageToLoad = pageName || 'home'; // Por defecto, carga 'home'
+    console.log('Loading content for', pageToLoad);
     // Fetch the new content
-    fetch(pageName + '.html')
+    fetch(pageToLoad + '.html')
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Could not load ${pageName}.html`);
+                throw new Error(`Could not load ${pageToLoad}.html`);
             }
             return response.text();
         })
         .then(html => {
             // Inject content into the #content div
-            document.getElementById('#main-content').innerHTML = html;
+            document.getElementById('content').innerHTML = html;
 
             // Update the browser history if requested
             if (shouldPushState) {
-                // For example, the URL becomes: https://example.com/A
-                // (Make sure your server is configured to handle these routes correctly if reloaded)
-                history.pushState({ page: pageName }, '', pageName);
+                history.pushState({ page: pageToLoad }, '', pageName);
             }
         })
         .catch(error => {
             console.error(error);
-            document.getElementById('#main-content').innerHTML =
+            document.getElementById('content').innerHTML =
                 '<p>Oops! An error occurred loading the page.</p>';
         });
 }
 
-document.querySelectorAll('.menu__item').forEach(item => {
-    item.addEventListener('click', (event) => {
-        event.preventDefault();
-        // Obtienes la ruta de la página desde el atributo data-page
-        const page = item.dataset.page; // "_home", "_blog", etc.
-        navigateTo(`./${page}`);
-    });
-});
 
-/**
- * Handle the browser's Back/Forward button (popstate event).
- * When the user clicks back/forward, we get the state from history
- * and load the corresponding page without pushing a new state.
- */
-window.onpopstate = function (event) {
-    // If state exists (i.e., user navigated away before), load that page
-    if (event.state && event.state.page) {
-        loadContent(event.state.page, false);
-    } else {
-        // If no state, maybe show a default or home content
-        document.getElementById('#main-content').innerHTML = `
-        <h1>Welcome!</h1>
-        <p>Click the links above to navigate. The URL will change, but the page won’t fully reload.</p>
-      `;
+async function loadComponents() {
+    console.log("Loading components...");
+    // We select all elements with data-page attribute
+    const elements = document.querySelectorAll('[data-page]');
+
+    // Recorremos cada elemento para hacer su respectivo fetch
+    for (const elem of elements) {
+        const filePath = elem.getAttribute('data-page');
+        try {
+            const response = await fetch(filePath);
+            const data = await response.text();
+            elem.innerHTML = data;
+        } catch (error) {
+            console.error(`Error loading ${filePath}:`, error);
+        }
     }
-};
+}
 
-/**
- * On initial load, let's check the URL path.
- * If the user loads the site at /A, for instance, we want to show A’s content right away.
- */
-window.addEventListener('DOMContentLoaded', () => {
-    // Grab the path excluding the leading slash. E.g. "/A" becomes "A"
-    const path = window.location.pathname.substring(1);
-    console.log(path);
-    // If there is a path (like 'A', 'B', or 'C'), load it. Otherwise, do nothing (show default).
-    if (path != 'src/index.html') {
+function setupResponsiveMenu() {
+    const toggleMenuBtn = document.getElementById("toggle-menu");
+    if (toggleMenuBtn) {
+        toggleMenuBtn.addEventListener("click", myResponsiveFunction);
+    } else {
+        console.error("No se encontró el botón #toggle-menu en el DOM.");
+    }
+}
+
+function setupNavigation() {
+    document.querySelectorAll('.menu__item').forEach(item => {
+        // If menu__item element has a data-page attribute, add a click event listener
+        if (item.dataset.page) {
+            console.log("Adding navigation in " + item + " for " + item.dataset.page);
+            item.addEventListener('click', (event) => {
+                event.preventDefault();
+                // Obtaining path from data-page attribute
+                const page = item.dataset.page;
+                navigateTo(`./${page}`);
+            });
+        }
+    });
+
+    /**
+     * Handle the browser's Back/Forward button (popstate event).
+     * When the user clicks back/forward, we get the state from history
+     * and load the corresponding page without pushing a new state.
+     */
+    window.onpopstate = function (event) {
+        console.log('Popstate event:', event.state);
+        // If state exists (i.e., user navigated away before), load that page
+        if (event.state && event.state.page) {
+            console.log('Loading content for', event.state.page);
+            loadContent(event.state.page, false);
+        } else {
+            // Si no hay estado, cargar la página inicial
+            history.replaceState({ page: 'home' }, '', '/src/home');
+            loadContent('home', false);
+        }
+    };
+}
+
+function initialAddress() {
+
+    let path = window.location.pathname.substring(1); // Obtener la ruta actual sin "/"
+
+    if (!path || path === 'src/index.html') {
+        // Redirigir a la página home y actualizar el historial
+        history.replaceState({ page: 'home' }, '', '/src/home');
+        loadContent('home', false);
+    } else {
+        // Cargar contenido dinámico según la URL
         loadContent(path, false);
     }
-});
+}
+
+async function initApp() {
+    console.log("Initialazing application...");
+    await loadComponents();
+    initialAddress();
+    setupResponsiveMenu();
+    setupNavigation();
+}
+
+// Llamamos a la función de inicio una vez que se haya cargado el DOM
+document.addEventListener("DOMContentLoaded", initApp)
