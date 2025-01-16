@@ -80,7 +80,8 @@ body {
     transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.menu__item:hover {
+.menu__item:hover,
+.menu__item:focus {
     background: var(--color-secondary);
 }
 
