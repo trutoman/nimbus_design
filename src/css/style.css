@@ -1,9 +1,14 @@
 /* Variables */
 :root {
-    /* Modo oscuro */
-    --color-background-schema: #10120E;
-    --color-background-content: #181C14;
-    --color-text: #FFFFFF;
+    /* Dark mode */
+    --color-background-schema-dark: #10120E;
+    --color-background-content-dark: #181C14;
+    --color-text-dark: #FFFFFF;
+    /* Light Mode */
+    --color-background-schema-light: #FFFFFF;
+    --color-background-content-light: #F0F0F0;
+    --color-text-light: #000000;
+    /**/
     --color-primary: #3C3D37;
     --color-secondary: #697565;
     --color-accent: #ECDFCC;
@@ -23,6 +28,18 @@
 body {
     font-size: var(--font-size-base);
     font-family: var(--font-family-base) !important;
+}
+
+body.light-theme {
+    --color-background-schema: var(--color-background-schema-light);
+    --color-background-content: var(--color-background-content-light);
+    --color-text: var(--color-text-light);
+}
+
+body.dark-theme {
+    --color-background-schema: var(--color-background-schema-dark);
+    --color-background-content: var(--color-background-content-dark);
+    --color-text: var(--color-text-dark);
 }
 
 /* Layout */

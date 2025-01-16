@@ -77,6 +77,13 @@ function setupResponsiveMenu() {
     }
 }
 
+function setModes() {
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+        document.body.classList.toggle('dark-theme');
+    });
+}
+
 // We configure navigation im navbar elements
 function setupNavigation() {
     // We select the container of menu with elements managing events
@@ -135,6 +142,7 @@ async function initApp() {
     await loadComponents();
     initialAddress();
     setupResponsiveMenu();
+    setModes();
     setupNavigation();
 }
 
