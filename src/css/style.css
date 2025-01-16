@@ -1,3 +1,4 @@
+/* Variables */
 :root {
     /* Modo oscuro */
     --color-background-schema: #10120E;
@@ -6,19 +7,25 @@
     --color-primary: #3C3D37;
     --color-secondary: #697565;
     --color-accent: #ECDFCC;
-    font-size: 16px;
+    --font-size-base: 100%;
+    --font-family-base: "Raleway", sans-serif;
+    --spacing-base: 1rem;
 }
 
+/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Tipography */
 body {
-    font-family: "Raleway" !important;
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-base) !important;
 }
 
+/* Layout */
 .wrapper {
     min-height: 100vh;
     display: flex;
@@ -26,6 +33,7 @@ body {
     flex-direction: column;
 }
 
+/* Navbar */
 .container__navbar {
     background: var(--color-background-schema);
     display: flex;
@@ -38,13 +46,14 @@ body {
 
 .container__navbar>*:last-child {
     margin-left: auto;
-    /* Empuja el último elemento hacia la derecha */
+    /* Push last element to right */
 }
 
 .container__navbar a {
     text-decoration: none;
 }
 
+/* Menu */
 .menu__list {
     display: flex;
     list-style: none;
@@ -79,7 +88,7 @@ body {
     display: none;
 }
 
-/* Estilos para pantallas pequeñas */
+/* Style for small screens */
 @media screen and (max-width:400px) {
     .menu__list {
         display: none;
@@ -96,10 +105,11 @@ body {
     }
 }
 
+/* Content */
 .content {
+    padding: calc(var(--spacing-base) * 3);
     background: var(--color-secondary);
     color: var(--color-text);
-    padding: 3rem;
     flex: 1;
     overflow-y: auto;
 }
@@ -114,6 +124,7 @@ body {
     font-size: 1.3rem;
 }
 
+/* Footer */
 .container__footer {
     /* Ya no es absoluto */
     background-color: var(--color-background-schema);
