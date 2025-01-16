@@ -77,13 +77,13 @@ function setupResponsiveMenu() {
     }
 }
 
+// Function to set between color modes
 function setModes() {
     const userTheme = localStorage.getItem('theme');
     if (userTheme) {
         document.body.classList.add(userTheme);
     } else {
         document.body.classList.add('dark-theme');
-        // o "light-theme", según tu preferencia
     }
     const toggleButton = document.getElementById('theme-toggle');
 
