@@ -1,17 +1,16 @@
 /* Variables */
 :root {
     /* Dark mode */
-    --color-background-schema-dark: #10120E;
-    --color-background-content-dark: #181C14;
+    --color-background-schema-dark: #121212;
+    --color-background-content-dark: #323b30;
     --color-text-dark: #FFFFFF;
+    --color-text-accent-dark: #FFFFFF;
     /* Light Mode */
-    --color-background-schema-light: #FFFFFF;
-    --color-background-content-light: #F0F0F0;
-    --color-text-light: #000000;
+    --color-background-schema-light: #f3f3f1;   /* Fondo principal clarito con un toque cálido */
+    --color-background-content-light: #cbcec1;  /* Fondo para contenedores, algo más oscuro */
+    --color-text-light: #1e1e1c;               /* Texto principal en tono gris oscuro */
+    --color-text-accent-light: #5d5d59;        /* Texto/acento en gris medio */
     /**/
-    --color-primary: #3C3D37;
-    --color-secondary: #697565;
-    --color-accent: #ECDFCC;
     --font-size-base: 100%;
     --font-family-base: "Raleway", sans-serif;
     --spacing-base: 1rem;
@@ -34,12 +33,14 @@ body.light-theme {
     --color-background-schema: var(--color-background-schema-light);
     --color-background-content: var(--color-background-content-light);
     --color-text: var(--color-text-light);
+    --color-text-accent: var(--color-text-accent-light);
 }
 
 body.dark-theme {
     --color-background-schema: var(--color-background-schema-dark);
     --color-background-content: var(--color-background-content-dark);
     --color-text: var(--color-text-dark);
+    --color-text-accent : var(--color-text-accent-dark);
 }
 
 /* Layout */
@@ -99,7 +100,7 @@ body.dark-theme {
 
 .menu__item:hover,
 .menu__item:focus {
-    background: var(--color-secondary);
+    background: var(--color-background-content);
 }
 
 .menu__icon {
@@ -126,7 +127,7 @@ body.dark-theme {
 /* Content */
 .content {
     padding: calc(var(--spacing-base) * 3);
-    background: var(--color-secondary);
+    background: var(--color-background-content);
     color: var(--color-text);
     flex: 1;
     overflow-y: auto;
@@ -134,7 +135,7 @@ body.dark-theme {
 
 .content h1 {
     font-size: 2rem;
-    color: var(--color-accent);
+    color: var(--color-text-accent);
 }
 
 .content p::first-letter {

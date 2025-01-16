@@ -78,9 +78,25 @@ function setupResponsiveMenu() {
 }
 
 function setModes() {
-    document.getElementById('theme-toggle').addEventListener('click', () => {
-        document.body.classList.toggle('light-theme');
-        document.body.classList.toggle('dark-theme');
+    const userTheme = localStorage.getItem('theme');
+    if (userTheme) {
+        document.body.classList.add(userTheme);
+    } else {
+        document.body.classList.add('dark-theme');
+        // o "light-theme", según tu preferencia
+    }
+    const toggleButton = document.getElementById('theme-toggle');
+
+    toggleButton.addEventListener('click', () => {
+        if (document.body.classList.contains('light-theme')) {
+            document.body.classList.remove('light-theme');
+            document.body.classList.add('dark-theme');
+            toggleButton.textContent = 'light_mode';
+        } else {
+            document.body.classList.remove('dark-theme');
+            document.body.classList.add('light-theme');
+            toggleButton.textContent = 'dark_mode';
+        }
     });
 }
 
@@ -106,9 +122,9 @@ function setupNavigation() {
         }
     });
 
-   // Handle the browser's Back/Forward button (popstate event).
-   // When the user clicks back/forward, we get the state from history
-   // and load the corresponding page without pushing a new state.
+    // Handle the browser's Back/Forward button (popstate event).
+    // When the user clicks back/forward, we get the state from history
+    // and load the corresponding page without pushing a new state.
     window.addEventListener('popstate', (event) => {
         console.log('Popstate event:', event.state);
         // If state exists (i.e., user navigated away before), load that page
