@@ -1,3 +1,5 @@
+import { pageMap } from './config.js';
+
 /* Función para alternar el menú responsive */
 function myResponsiveFunction() {
     console.log("Click en el botón de menú");
@@ -29,6 +31,9 @@ function navigateTo(pageName) {
 function loadContent(pageToLoad, shouldPushState) {
 
     console.log("1-Cargando contenido desde:", pageToLoad);
+
+    const realPageToLoad = pageMap[pageToLoad] || pageToLoad;
+
     // --- EVITAR DUPLICAR HISTORIAL ---
     if (shouldPushState) {
         // Si el estado actual del historial ya tiene esta misma página...
@@ -41,10 +46,10 @@ function loadContent(pageToLoad, shouldPushState) {
 
     console.log('Fetching content for', pageToLoad);
     // Fetch the new content
-    fetch(pageToLoad)
+    fetch(realPageToLoad)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Could not load ${pageToLoad}`);
+                throw new Error(`Could not load ${realPageToLoad}`);
             }
             return response.text();
         })
@@ -129,7 +134,7 @@ function setupNavigation() {
             loadContent(event.state.page, false);
         } else {
             // Si no hay estado, cargar la página inicial
-            history.replaceState({ page: 'home' }, '', '/src/pages/home');
+            history.replaceState({ page: 'home' }, '', 'home');
             loadContent('home', false);
         }
     });
@@ -141,24 +146,18 @@ function initialAddress() {
 
     if (!path || path === 'public/index.html') {
         // Redirigir a la página home y actualizar el historial
-        history.replaceState({ page: 'home' }, '', 'public/index.html');
-        loadContent('/src/pages/home.html', false);
+        history.replaceState({ page: 'home' }, '', 'home');
+        loadContent('home', false);
     } else {
         // Cargar contenido dinámico según la URL
         loadContent(path, false);
     }
 }
 
+
+// This function unifies all the procedures at init
 async function initApp() {
     console.log("Initialazing application...");
-
-    // 1. Inyectar el navbar
-    const navbarElem = document.getElementById('navbar');
-    if (navbarElem) {
-        const resp = await fetch(navbarElem.dataset.page);
-        navbarElem.innerHTML = await resp.text();
-        await loadComponents();
-    }
 
     await loadComponents();
     initialAddress();
@@ -166,5 +165,5 @@ async function initApp() {
     setupNavigation();
 }
 
-// Llamamos a la función de inicio una vez que se haya cargado el DOM
+// Call initApp function just when DOM has already being loaded
 document.addEventListener("DOMContentLoaded", initApp)
