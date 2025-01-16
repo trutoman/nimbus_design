@@ -3,7 +3,7 @@ import { pageMap } from './config.js';
 // We load content for a requested page while at same time
 // we manage the history state.
 function loadContent(pageToLoad, shouldPushState) {
-    console.log("1-Cargando contenido desde:", pageToLoad);
+    console.log("Loading content from:", pageToLoad);
 
     if (shouldPushState) {
         // If current page is already at history we avoid to duplicate it
@@ -60,7 +60,7 @@ async function loadComponents() {
 function setupResponsiveMenu() {
     // Function to alternate responsive menu
     function myResponsiveFunction() {
-        console.log("Click en el botón de menú");
+        console.log("Click in menu button");
         let x = document.getElementById("my-responsive-menu");
         if (x.classList.contains("responsive")) {
             x.classList.remove("responsive");
@@ -73,7 +73,7 @@ function setupResponsiveMenu() {
     if (toggleMenuBtn) {
         toggleMenuBtn.addEventListener("click", myResponsiveFunction);
     } else {
-        console.error("No se encontró el botón #toggle-menu en el DOM.");
+        console.error("We did NOT find #toggle-menu inside DOM.");
     }
 }
 
@@ -82,7 +82,7 @@ function setupNavigation() {
     // We select the container of menu with elements managing events
     const menuContainer = document.getElementById("navbar");
     if (!menuContainer) {
-        console.error("No se encontró el contenedor de menú #my-responsive-menu en el DOM.");
+        console.error("We did NOT find container menu #my-responsive-menu inside DOM.");
         return;
     }
     // Events delegation: we create an unique listener on container
