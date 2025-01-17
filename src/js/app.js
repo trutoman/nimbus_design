@@ -112,13 +112,19 @@ function setupNavigation() {
     // (in place of create a listener for every menu elements)
     menuContainer.addEventListener('click', (event) => {
         // Verify if click happens on ".menu__item" elements
-        const clickedItem = event.target.closest('.menu__item');
+        const clickedItem = event.target.closest('.menu__list-element');
+        console.log("selected item:", clickedItem);
         if (!clickedItem) return; // If not menu__item clicked we exit
+
+        const elements = menuContainer.querySelectorAll('.menu__list-element');
+        for (const elem of elements) {
+            elem.classList.remove("menu__list-element-active");
+        }
         // If menu__item has a page defined we load content
         if (clickedItem.dataset.page) {
-            // Avoid default behaviour (navigate to in 'a' elements)
             event.preventDefault();
             loadContent(`${clickedItem.dataset.page}`, true);
+            clickedItem.classList.add("menu__list-element-active");
         }
     });
 

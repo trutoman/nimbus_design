@@ -7,11 +7,12 @@
     --color-text-dark: #FFFFFF;
     --color-text-accent-dark: #FFFFFF;
     /* Light Mode */
-    --color-background-schema-light: #f3f3f1;   /* Fondo principal clarito con un toque cálido */
-    --color-background-content-light: #cbcec1;  /* Fondo para contenedores, algo más oscuro */
+    --color-background-schema-light: #f3f3f1;
+    --color-background-content-light: #cbcec1;
     --color-background-card-light: #fefffa;
-    --color-text-light: #1e1e1c;               /* Texto principal en tono gris oscuro */
-    --color-text-accent-light: #5d5d59;        /* Texto/acento en gris medio */
+    --color-text-light: #1e1e1c;
+    --color-text-accent-light: #5d5d59;
+    /* Texto/acento en gris medio */
     /**/
     --font-size-base: 100%;
     --font-family-base: "Raleway", sans-serif;
@@ -44,7 +45,7 @@ body.dark-theme {
     --color-background-content: var(--color-background-content-dark);
     --color-background-card: var(--color-background-card-dark);
     --color-text: var(--color-text-dark);
-    --color-text-accent : var(--color-text-accent-dark);
+    --color-text-accent: var(--color-text-accent-dark);
 }
 
 /* Layout */
@@ -115,6 +116,10 @@ body.dark-theme {
     background: var(--color-background-content);
 }
 
+.menu__list-element-active {
+    background: var(--color-background-content);
+}
+
 .menu__icon {
     display: none;
 }
@@ -123,7 +128,7 @@ body.dark-theme {
 @media screen and (max-width:600px) {
     .menu__list-responsive {
         display: none;
-        flex-direction: column;
+
     }
 
     .menu__icon {
@@ -133,6 +138,14 @@ body.dark-theme {
 
     .menu__list-responsive.responsive {
         display: flex;
+        flex-direction: column;
+    }
+}
+
+/* Style for small screens */
+@media screen and (max-width:500px) {
+    .content.h1 {
+        font-size: 1.5rem;
     }
 }
 
@@ -145,9 +158,11 @@ body.dark-theme {
     overflow-y: auto;
 }
 
-.content h1 {
+.content>h1 {
     font-size: 2rem;
-    color: var(--color-text-accent);
+    color: var(--color-text);
+    text-wrap: nowrap;
+    padding: 1rem 0rem 1rem 0rem;
 }
 
 .content p::first-letter {
@@ -166,21 +181,25 @@ body.dark-theme {
 
 /* Blos posts container */
 .post-card-container {
-    display:flex;
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: stretch;
-    column-gap: 10px;
+    column-gap: 12px;
+    row-gap: 12px;
 }
 
 /* Blog preview card */
 .blog-post-card {
     display: flex;
-    width: 20rem;
+    min-width: 20rem;
+    max-width: 20rem;
+    height: 23rem;
     flex-direction: column;
-    box-shadow: 0 3px 7px -1px rgba(0, 0, 0, .1);
-    background-color:  var(--color-background-card);
+    justify-content: start;
+    box-shadow: 0 3px 7px -1px rgba(0, 0, 0, .5);
+    background-color: var(--color-background-card);
     margin-bottom: 1.6%;
     line-height: 1.4;
     border-radius: 5px;
@@ -188,13 +207,14 @@ body.dark-theme {
     z-index: 0;
 }
 
-.blog-post-card .meta {
+.blog-post-card>.meta {
     position: relative;
     z-index: 0;
-    height: 6rem;
+    height: 10rem;
+    flex: 1;
 }
 
-.blog-post-card .photo {
+.blog-post-card>.meta>.photo {
     position: absolute;
     top: 0;
     right: 0;
@@ -205,16 +225,39 @@ body.dark-theme {
     transition: transform 0.2s;
 }
 
-.blog-post-card .description {
+.blog-post-card>.description {
     padding: 1rem;
     background: var(--color-background-card);
     position: relative;
+    flex: 1;
     z-index: 1;
 }
-.description p {
+
+.blog-post-card>.description>h1 {
+    color: var(--color-text-accent);
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+}
+
+.blog-post-card>.description>p {
+    color: var(--color-text);
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* Número de líneas que deseas mostrar */
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.blog-post-card>.description>.read-more {
+    margin-top: 1rem;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.blog-post-card>.description a {
+    text-decoration: none;
+    color: var(--color-text-accent);
 }
