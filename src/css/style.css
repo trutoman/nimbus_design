@@ -75,6 +75,14 @@ body.dark-theme {
 .menu__list {
     display: flex;
     list-style: none;
+    flex-wrap: nowrap;
+    align-items: stretch;
+}
+
+.menu__list-responsive {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
     flex-wrap: wrap;
     align-items: stretch;
 }
@@ -108,8 +116,8 @@ body.dark-theme {
 }
 
 /* Style for small screens */
-@media screen and (max-width:400px) {
-    .menu__list {
+@media screen and (max-width:600px) {
+    .menu__list-responsive {
         display: none;
         flex-direction: column;
     }
@@ -119,7 +127,7 @@ body.dark-theme {
         cursor: pointer;
     }
 
-    .menu__list.responsive {
+    .menu__list-responsive.responsive {
         display: flex;
     }
 }
