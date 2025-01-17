@@ -3,11 +3,13 @@
     /* Dark mode */
     --color-background-schema-dark: #121212;
     --color-background-content-dark: #323b30;
+    --color-background-card-dark: #3b4438;
     --color-text-dark: #FFFFFF;
     --color-text-accent-dark: #FFFFFF;
     /* Light Mode */
     --color-background-schema-light: #f3f3f1;   /* Fondo principal clarito con un toque cálido */
     --color-background-content-light: #cbcec1;  /* Fondo para contenedores, algo más oscuro */
+    --color-background-card-light: #fefffa;
     --color-text-light: #1e1e1c;               /* Texto principal en tono gris oscuro */
     --color-text-accent-light: #5d5d59;        /* Texto/acento en gris medio */
     /**/
@@ -32,6 +34,7 @@ body {
 body.light-theme {
     --color-background-schema: var(--color-background-schema-light);
     --color-background-content: var(--color-background-content-light);
+    --color-background-card: var(--color-background-card-light);
     --color-text: var(--color-text-light);
     --color-text-accent: var(--color-text-accent-light);
 }
@@ -39,6 +42,7 @@ body.light-theme {
 body.dark-theme {
     --color-background-schema: var(--color-background-schema-dark);
     --color-background-content: var(--color-background-content-dark);
+    --color-background-card: var(--color-background-card-dark);
     --color-text: var(--color-text-dark);
     --color-text-accent : var(--color-text-accent-dark);
 }
@@ -106,8 +110,8 @@ body.dark-theme {
     transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.menu__item:hover,
-.menu__item:focus {
+.menu__list-element:hover,
+.menu__list-element:focus {
     background: var(--color-background-content);
 }
 
@@ -134,7 +138,7 @@ body.dark-theme {
 
 /* Content */
 .content {
-    padding: calc(var(--spacing-base) * 3);
+    padding: calc(var(--spacing-base) * 2);
     background: var(--color-background-content);
     color: var(--color-text);
     flex: 1;
@@ -158,4 +162,59 @@ body.dark-theme {
     text-align: center;
     padding: 1rem;
     color: var(--color-text);
+}
+
+/* Blos posts container */
+.post-card-container {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    column-gap: 10px;
+}
+
+/* Blog preview card */
+.blog-post-card {
+    display: flex;
+    width: 20rem;
+    flex-direction: column;
+    box-shadow: 0 3px 7px -1px rgba(0, 0, 0, .1);
+    background-color:  var(--color-background-card);
+    margin-bottom: 1.6%;
+    line-height: 1.4;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.blog-post-card .meta {
+    position: relative;
+    z-index: 0;
+    height: 6rem;
+}
+
+.blog-post-card .photo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.2s;
+}
+
+.blog-post-card .description {
+    padding: 1rem;
+    background: var(--color-background-card);
+    position: relative;
+    z-index: 1;
+}
+.description p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Número de líneas que deseas mostrar */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
