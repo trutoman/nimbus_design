@@ -3,7 +3,7 @@
     /* Dark mode */
     --color-background-schema-dark: #121212;
     --color-background-content-dark: #323b30;
-    --color-background-card-dark: #3b4438;
+    --color-background-card-dark: #4b5348;
     --color-text-dark: #FFFFFF;
     --color-text-accent-dark: #FFFFFF;
     /* Light Mode */
@@ -165,11 +165,6 @@ body.dark-theme {
     padding: 1rem 0rem 1rem 0rem;
 }
 
-.content p::first-letter {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1.3rem;
-}
-
 /* Footer */
 .container__footer {
     /* Ya no es absoluto */
@@ -186,61 +181,73 @@ body.dark-theme {
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: stretch;
-    column-gap: 12px;
-    row-gap: 12px;
+    column-gap: 16px;
+    row-gap: 16px;
 }
 
-/* Blog preview card */
 .blog-post-card {
-    display: flex;
-    min-width: 20rem;
-    max-width: 20rem;
-    height: 23rem;
-    flex-direction: column;
-    justify-content: start;
-    box-shadow: 0 3px 7px -1px rgba(0, 0, 0, .5);
-    background-color: var(--color-background-card);
-    margin-bottom: 1.6%;
-    line-height: 1.4;
-    border-radius: 5px;
-    overflow: hidden;
-    z-index: 0;
+    display: grid;
+    max-width: 24rem;
+    min-width: 14rem;
+    background: var(--color-background-card);
+    grid-template-areas:
+        "meta meta"
+        "title title"
+        "text text"
+        "author author";
+    grid-template-columns: 1.1fr 1fr;
+    grid-template-rows: 8rem 3rem 4rem 2rem;
+    transition: .1s;
+    -webkit-transition: .1s;
+    cursor:pointer;
 }
+
+.blog-post-card:hover{
+    transform: scale(1.03);
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+  }
 
 .blog-post-card>.meta {
-    position: relative;
-    z-index: 0;
-    height: 10rem;
-    flex: 1;
+    grid-area: meta;
 }
 
 .blog-post-card>.meta>.photo {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.2s;
-}
-
-.blog-post-card>.description {
-    padding: 1rem;
-    background: var(--color-background-card);
+    width: 100%;
+    height: 100%;
     position: relative;
-    flex: 1;
-    z-index: 1;
+    background-size: cover;
+    transition: transform 0.2s;
+    border-radius: 5px 5px 0px 0px;
+    background-size: cover;
+    background-position: center center;
 }
 
-.blog-post-card>.description>h1 {
+.blog-post-card>.description-title {
+    grid-area: title;
     color: var(--color-text-accent);
+    padding-left: 2%;
+    align-self: center;
     overflow: hidden;
     text-wrap: nowrap;
     text-overflow: ellipsis;
 }
 
-.blog-post-card>.description>p {
+.blog-post-card>.description-title>.line {
+    height: 1px;px;
+    width:94%;
+    justify-content: left;
+    margin:auto;
+    background-color: var(--color-text);
+  }
+
+.blog-post-card>.description-text {
+    grid-area: text;
+    padding-left: 5%;
+    padding-right: 3%;
+
+}
+
+.blog-post-card>.description-text>p {
     color: var(--color-text);
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -250,14 +257,21 @@ body.dark-theme {
     text-overflow: ellipsis;
 }
 
-.blog-post-card>.description>.read-more {
-    margin-top: 1rem;
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
+.blog-post-card>.description-text>p::first-letter {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.3rem;
 }
 
-.blog-post-card>.description a {
-    text-decoration: none;
-    color: var(--color-text-accent);
+.blog-post-card>.author {
+    grid-area: author;
+    align-self: center;
+    padding-right: 8%;
+    justify-self: right;
+}
+
+.blog-post-card>.author p{
+    font-family: var(--font-family-base);
+    font-size: smaller;
+    font-style: italic;
+    grid-area: author;
 }
