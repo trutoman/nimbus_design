@@ -147,7 +147,7 @@ body.dark-theme {
 @media screen and (max-width:684px) {
 
     .menu__item-text {
-        display:none;
+        display: none;
     }
 
 }
@@ -158,6 +158,7 @@ body.dark-theme {
     .menu__item-text {
         display: block;
     }
+
     .menu__list-responsive {
         display: none;
     }
@@ -200,27 +201,43 @@ body.dark-theme {
 .container__footer {
     /* Ya no es absoluto */
     background-color: var(--color-background-schema);
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
     padding: 1rem;
     color: var(--color-text);
 }
 
+.footer-left {}
+
+.footer-right {
+    margin-left: auto;
+    list-style: none;
+}
+
+.footer-right ul {
+    display: flex;             /* Convierte a flex container */
+    list-style: none;          /* Quita las viñetas */
+    margin: 0;                 /* Ajusta margen a tu preferencia */
+    padding: 0;
+    gap: 1rem;                 /* Espacio entre elementos (opcional) */
+    justify-content: flex-start;
+}
+
 /* Blos posts container */
 .post-card-container {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-auto-rows: auto;
+    grid-auto-flow: row dense;
     background: var(--color-background);
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: stretch;
-    column-gap: 16px;
-    row-gap: 16px;
 }
 
 .blog-post-card {
     display: grid;
-    max-width: 24rem;
-    min-width: 14rem;
+    width: 100%;
+    height: 100%;
     background: var(--color-background-card);
     grid-template-areas:
         "meta meta"
@@ -231,13 +248,13 @@ body.dark-theme {
     grid-template-rows: 8rem 3rem 4rem 2rem;
     transition: .1s;
     -webkit-transition: .1s;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.blog-post-card:hover{
+.blog-post-card:hover {
     transform: scale(1.03);
-    box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
-  }
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
 
 .blog-post-card>.meta {
     grid-area: meta;
@@ -265,12 +282,13 @@ body.dark-theme {
 }
 
 .blog-post-card>.description-title>.line {
-    height: 1px;px;
-    width:24%;
+    height: 1px;
+    px;
+    width: 24%;
     justify-content: left;
-    margin-left:6%;
+    margin-left: 6%;
     background-color: var(--color-text);
-  }
+}
 
 .blog-post-card>.description-text {
     grid-area: text;
@@ -301,7 +319,7 @@ body.dark-theme {
     justify-self: right;
 }
 
-.blog-post-card>.author p{
+.blog-post-card>.author p {
     font-family: var(--font-family-base);
     font-size: smaller;
     font-style: italic;
