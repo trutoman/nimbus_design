@@ -98,13 +98,33 @@ body.dark-theme {
 
 .menu__list-element {
     display: flex;
-    align-items: stretch;
+    align-items: center;
 }
 
 .menu__item {
     font-weight: bold;
     display: block;
-    padding: 14px 16px;
+    padding: .8rem 1rem .8rem 1rem;
+    width: 100%;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.menu__item-text {
+    font-weight: bold;
+    display: block;
+    padding: .8rem 1rem .8rem 0rem;
+    width: 100%;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.menu__item-icon {
+    display: block;
+    padding-right: .3rem;
+    padding-left: .4rem;
     width: 100%;
     color: var(--color-text);
     text-decoration: none;
@@ -124,11 +144,22 @@ body.dark-theme {
     display: none;
 }
 
+@media screen and (max-width:684px) {
+
+    .menu__item-text {
+        display:none;
+    }
+
+}
+
 /* Style for small screens */
-@media screen and (max-width:600px) {
+@media screen and (max-width:400px) {
+
+    .menu__item-text {
+        display: block;
+    }
     .menu__list-responsive {
         display: none;
-
     }
 
     .menu__icon {
@@ -178,6 +209,7 @@ body.dark-theme {
 .post-card-container {
     display: flex;
     flex-direction: row;
+    background: var(--color-background);
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: stretch;
@@ -234,9 +266,9 @@ body.dark-theme {
 
 .blog-post-card>.description-title>.line {
     height: 1px;px;
-    width:94%;
+    width:24%;
     justify-content: left;
-    margin:auto;
+    margin-left:6%;
     background-color: var(--color-text);
   }
 

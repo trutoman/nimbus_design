@@ -100,22 +100,14 @@ function setModes() {
     });
 }
 
-// We configure navigation im navbar elements
-function setupNavigation() {
-    // We select the container of menu with elements managing events
-    const menuContainer = document.getElementById("navbar");
-    if (!menuContainer) {
-        console.error("We did NOT find container menu #my-responsive-menu inside DOM.");
-        return;
-    }
-    // Events delegation: we create an unique listener on container
-    // (in place of create a listener for every menu elements)
-    menuContainer.addEventListener('click', (event) => {
-        // Verify if click happens on ".menu__item" elements
-        const clickedItem = event.target.closest('.menu__list-element');
-        console.log("selected item:", clickedItem);
-        if (!clickedItem) return; // If not menu__item clicked we exit
+function handleMenuClick(event, menuContainer) {
+    // Verify if click happens on ".menu__list-element" elements
+    const clickedItem = event.target.closest('.menu__list-element');
+    console.log("selected item:", clickedItem);
+    if (!clickedItem) return; // If not menu__item clicked we exit
 
+    // We reassign active class only when element clicked is has a menu__item
+    if (clickedItem.hasAttribute('data-page')) {
         const elements = menuContainer.querySelectorAll('.menu__list-element');
         for (const elem of elements) {
             elem.classList.remove("menu__list-element-active");
@@ -126,21 +118,38 @@ function setupNavigation() {
             loadContent(`${clickedItem.dataset.page}`, true);
             clickedItem.classList.add("menu__list-element-active");
         }
-    });
+        else {
+            console.log("selected item:" + clickedItem + " has no data-page attribute");
+        }
+    }
+}
+
+// We configure navigation im navbar elements
+function setupNavigation() {
+    // We select the container of menu with elements managing events
+    const menuContainer = document.getElementById("navbar");
+    if (!menuContainer) {
+        console.error("We did NOT find container menu #my-responsive-menu inside DOM.");
+        return;
+    }
+    // Events delegation: we create an unique listener on container
+    // (in place of create a listener for every menu elements)
+    menuContainer.addEventListener('click', (event) => handleMenuClick(event, menuContainer));
 
     // Handle the browser's Back/Forward button (popstate event).
     // When the user clicks back/forward, we get the state from history
     // and load the corresponding page without pushing a new state.
     window.addEventListener('popstate', (event) => {
-        console.log('Popstate event:', event.state);
+        console.log('Popstate event:', event);
         // If state exists (i.e., user navigated away before), load that page
         if (event.state && event.state.page) {
             console.log('Loading content for', event.state.page);
             loadContent(event.state.page, false);
         } else {
             // if no state we load main page
-            history.replaceState({ page: 'home' }, '', 'home');
-            loadContent('home', false);
+            console.log('popstate null');
+            //history.replaceState({ page: 'home' }, '', 'home');
+            //loadContent('home', false);
         }
     });
 }
