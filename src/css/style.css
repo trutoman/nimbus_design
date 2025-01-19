@@ -208,7 +208,9 @@ body.dark-theme {
     color: var(--color-text);
 }
 
-.footer-left {}
+.footer-left {
+    margin-left: 20%;
+}
 
 .footer-right {
     margin-left: auto;
