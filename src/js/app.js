@@ -170,6 +170,10 @@ function initialAddress() {
     }
 }
 
+function updateCurrentYear () {
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+}
+
 // This function unifies all the procedures at init
 async function initApp() {
     console.log("Initialazing application...");
@@ -178,6 +182,7 @@ async function initApp() {
     setupResponsiveMenu();
     setModes();
     setupNavigation();
+    updateCurrentYear();
 }
 
 // Call initApp function just when DOM has already being loaded

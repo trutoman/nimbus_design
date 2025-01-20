@@ -197,35 +197,41 @@ body.dark-theme {
 
 /* Footer */
 .container__footer {
-    /* Ya no es absoluto */
+    display: grid;
     background-color: var(--color-background-schema);
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    grid-template-columns: [col1-start] auto [col2-start] auto [col3-start] auto;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-content: space-around;
     padding: 1rem;
     color: var(--color-text);
 }
 
 .footer-left {
-    margin-left: 20%;
+    grid-column: 1;
+}
+
+.footer-middle {
+    grid-column: 2;
+    margin: 0 1rem 0 1rem;
 }
 
 .footer-right {
-    margin-left: auto;
+    grid-column: 3;
+}
+
+.footer-right>ul {
+    display: grid;
+    justify-content: flex-start;
+    grid-auto-flow: column;
+    padding: 0;
+    margin: 0;
     list-style: none;
 }
 
-.footer-right ul {
-    display: flex;
-    /* Convierte a flex container */
-    list-style: none;
-    /* Quita las viñetas */
-    margin: 0;
-    /* Ajusta margen a tu preferencia */
-    padding: 0;
-    gap: 1rem;
-    /* Espacio entre elementos (opcional) */
-    justify-content: flex-start;
+.footer-right>ul>li {
+    font-size: large;
+    margin: .2rem;
 }
 
 /* Blos posts container */
