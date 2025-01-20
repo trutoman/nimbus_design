@@ -62,10 +62,13 @@ function setupResponsiveMenu() {
     function myResponsiveFunction() {
         console.log("Click in menu button");
         let x = document.getElementById("my-responsive-menu");
+        let toggleMenuBtn = document.getElementById("toggle-menu");
         if (x.classList.contains("responsive")) {
             x.classList.remove("responsive");
+            toggleMenuBtn.textContent = 'menu';
         } else {
             x.classList.add("responsive");
+            toggleMenuBtn.textContent = 'menu_open';
         }
     }
     // This block will add responsive function to click event on toggle-menu element
