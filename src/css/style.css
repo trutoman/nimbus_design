@@ -62,6 +62,7 @@ body.dark-theme {
     grid-template-columns: [col1-start] auto [col2-start] 1fr [col3-start] 1fr;
     grid-template-rows: 1fr;
     background: var(--color-background-schema);
+    position: relative;
 }
 
 .container-navbar ul {
@@ -125,6 +126,7 @@ body.dark-theme {
     display: none;
 }
 
+/* Styles affecting navbar for small>smaller screens */
 @media screen and (max-width:684px) {
 
     .menu__item-text {
@@ -132,7 +134,6 @@ body.dark-theme {
     }
 }
 
-/* Style for small screens */
 @media screen and (max-width:400px) {
 
     #toggle-menu {
@@ -142,6 +143,7 @@ body.dark-theme {
         transition: background 0.2s ease, transform 0.2s ease;
         cursor: pointer;
     }
+
     #toggle-menu:hover,
     #toggle-menu:focus {
         background: var(--color-background-content);
@@ -162,13 +164,18 @@ body.dark-theme {
     body .menu__list-responsive.responsive {
         display: flex;
         flex-direction: column;
+        position: absolute;
+        width: fit-content;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        background: inherit;
+        overflow: visible;
     }
-}
 
-/* Style for small screens */
-@media screen and (max-width:500px) {
-    .content.h1 {
-        font-size: 1.5rem;
+    .menu__list-responsive {
+        border-style: dashed;
+        border-width: 2px;
     }
 }
 
