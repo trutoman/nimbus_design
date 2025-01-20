@@ -57,39 +57,32 @@ body.dark-theme {
 }
 
 /* Navbar */
-.container__navbar {
+.container-navbar {
+    display: grid;
+    grid-template-columns: [col1-start] auto [col2-start] 1fr [col3-start] 1fr;
+    grid-template-rows: 1fr;
     background: var(--color-background-schema);
-    display: flex;
-    width: 100%;
-    flex-direction: row;
+}
+
+.container-navbar ul {
+    display: grid;
     justify-content: flex-start;
-    align-items: stretch;
-    position: relative;
-}
-
-.container__navbar>*:last-child {
-    margin-left: auto;
-    /* Push last element to right */
-}
-
-.container__navbar a {
-    text-decoration: none;
+    grid-auto-flow: column;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
 /* Menu */
-.menu__list {
-    display: flex;
-    list-style: none;
-    flex-wrap: nowrap;
-    align-items: stretch;
-}
 
 .menu__list-responsive {
-    display: flex;
-    flex-direction: row;
-    list-style: none;
-    flex-wrap: wrap;
-    align-items: stretch;
+    grid-column-start: 2;
+    grid-row-start: 1;
+}
+
+.menu__list {
+    grid-column-start: 3;
+    grid-row-start: 1;
 }
 
 .menu__list--rtl {
@@ -99,35 +92,21 @@ body.dark-theme {
 .menu__list-element {
     display: flex;
     align-items: center;
-}
-
-.menu__item {
-    font-weight: bold;
-    display: block;
-    padding: .8rem 1rem .8rem 1rem;
-    width: 100%;
-    color: var(--color-text);
-    text-decoration: none;
-    transition: background 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
 }
 
 .menu__item-text {
-    font-weight: bold;
     display: block;
-    padding: .8rem 1rem .8rem 0rem;
-    width: 100%;
     color: var(--color-text);
-    text-decoration: none;
+    font-weight: bold;
+    padding: .8rem 1rem .8rem 0rem;
     transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .menu__item-icon {
     display: block;
-    padding-right: .3rem;
-    padding-left: .4rem;
-    width: 100%;
     color: var(--color-text);
-    text-decoration: none;
+    padding: .8rem .3rem .8rem .4rem;
     transition: background 0.2s ease, transform 0.2s ease;
 }
 
@@ -140,7 +119,9 @@ body.dark-theme {
     background: var(--color-background-content);
 }
 
-.menu__icon {
+#toggle-menu {
+    grid-column-start: 1;
+    grid-row-start: 1;
     display: none;
 }
 
@@ -149,26 +130,36 @@ body.dark-theme {
     .menu__item-text {
         display: none;
     }
-
 }
 
 /* Style for small screens */
 @media screen and (max-width:400px) {
 
+    #toggle-menu {
+        display: block;
+        color: var(--color-text);
+        padding: .8rem .3rem .8rem .4rem;
+        transition: background 0.2s ease, transform 0.2s ease;
+        cursor: pointer;
+    }
+    #toggle-menu:hover,
+    #toggle-menu:focus {
+        background: var(--color-background-content);
+    }
+
     .menu__item-text {
         display: block;
     }
 
-    .menu__list-responsive {
+    /* We add body here to make greater specificity so in that way those
+    style changes are applied properly */
+    body .menu__list-responsive {
         display: none;
     }
 
-    .menu__icon {
-        display: flex;
-        cursor: pointer;
-    }
-
-    .menu__list-responsive.responsive {
+    /* We add body here to make greater specificity so in that way those
+    style changes are applied properly */
+    body .menu__list-responsive.responsive {
         display: flex;
         flex-direction: column;
     }
@@ -218,11 +209,15 @@ body.dark-theme {
 }
 
 .footer-right ul {
-    display: flex;             /* Convierte a flex container */
-    list-style: none;          /* Quita las viñetas */
-    margin: 0;                 /* Ajusta margen a tu preferencia */
+    display: flex;
+    /* Convierte a flex container */
+    list-style: none;
+    /* Quita las viñetas */
+    margin: 0;
+    /* Ajusta margen a tu preferencia */
     padding: 0;
-    gap: 1rem;                 /* Espacio entre elementos (opcional) */
+    gap: 1rem;
+    /* Espacio entre elementos (opcional) */
     justify-content: flex-start;
 }
 
@@ -260,6 +255,7 @@ body.dark-theme {
 
 .blog-post-card>.meta {
     grid-area: meta;
+    overflow: hidden;
 }
 
 .blog-post-card>.meta>.photo {
@@ -271,7 +267,12 @@ body.dark-theme {
     border-radius: 5px 5px 0px 0px;
     background-size: cover;
     background-position: center center;
+
 }
+
+/* .blog-post-card>.meta>.photo:hover {
+    transform: scale(1.1) rotate(2deg);
+} */
 
 .blog-post-card>.description-title {
     grid-area: title;
