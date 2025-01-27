@@ -160,13 +160,26 @@ function setupNavigation() {
 // We manipulate the first load of index.html to redirect to home page
 function initialAddress() {
     let path = window.location.pathname;
-    if (!path || path === '/public/index.html') {
+
+    // We remove initial bar if exists e.g. "/blog" => "blog"
+    let page = path.replace(/^\/+/, '');
+
+    if (!page || page === '/public/index.html') {
         // Redirect to main page and load history
         history.replaceState({ page: 'home' }, '', 'home');
         loadContent('home', false);
-    } else {
+        return;
+    }
+
+    // If page exists in pageMap, we load it
+    if (pageMap[page]) {
         // We load content of url
-        loadContent(path, false);
+        loadContent(page, false);
+    } else {
+        // If NOT exist in pageMap we should load a page error 404 but
+        // currently we redirect to main
+        loadContent('home', false);
+        // loadContent('404', false) we should create a new page at: pageMap["404"]
     }
 }
 
