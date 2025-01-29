@@ -73,11 +73,27 @@ function setupResponsiveMenu() {
     }
     // This block will add responsive function to click event on toggle-menu element
     const toggleMenuBtn = document.getElementById("toggle-menu");
+    let menu = document.getElementById("my-responsive-menu");
     if (toggleMenuBtn) {
-        toggleMenuBtn.addEventListener("click", myResponsiveFunction);
+        toggleMenuBtn.addEventListener("click", (event) => {
+            myResponsiveFunction();
+            event.stopPropagation(); // Prevents clicking the button from immediately closing the menu
+        });
     } else {
-        console.error("We did NOT find #toggle-menu inside DOM.");
+        console.error("No se encontró #toggle-menu en el DOM.");
     }
+
+    // Add an event to close the menu when clicking outside of it
+    document.addEventListener("click", (event) => {
+        if (menu.classList.contains("responsive")) {
+            // Check if the click occurred outside the menu and button
+            if (!menu.contains(event.target) && event.target !== toggleMenuBtn) {
+                console.log("Clic fuera del menú, cerrándolo.");
+                menu.classList.remove("responsive");
+                toggleMenuBtn.textContent = 'menu';
+            }
+        }
+    });
 }
 
 // Function to set between color modes
